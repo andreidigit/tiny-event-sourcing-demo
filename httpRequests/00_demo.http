@@ -1,0 +1,19 @@
+POST http://localhost:8080/projects/Project?creatorId="Andrey"
+
+> {%
+client.global.clearAll();
+client.global.set("projectId", response.body.projectId);
+client.global.set("taskName", "Some task name");
+client.log("projectId: " + client.global.get("projectId"));
+%}
+
+###
+
+POST http://localhost:8080/projects/{{projectId}}/tasks/{{taskName}}
+
+###
+
+GET http://localhost:8080/projects/{{projectId}}
+
+###
+
