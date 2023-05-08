@@ -1,13 +1,26 @@
+
+### Create user Andrei
+
 POST http://localhost:8080/users/Andrei?userPassword=123abc456
 
 > {%
 client.global.clearAll();
-client.global.set("userId", response.body.userId);
-client.log("userId: " + client.global.get("userId"));
+client.global.set("userAndreiId", response.body.userId);
+client.log("userAndreiId: " + client.global.get("userAndreiId"));
 %}
 
-###
+### Create user Sergei
 
-GET http://localhost:8080/users/{{userId}}
+POST http://localhost:8080/users/Sergei?userPassword=123abc456
 
-###
+> {%
+client.global.set("userSergeiId", response.body.userId);
+client.log("userSergeiId: " + client.global.get("userSergeiId"));
+%}
+
+
+
+### Get user Andrei aggregate
+
+GET http://localhost:8080/users/{{userAndreiId}}
+

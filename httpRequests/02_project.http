@@ -1,0 +1,42 @@
+
+### Create a Project with the User
+
+POST http://localhost:8080/projects/Project?creatorId={{userAndreiId}}
+
+> {%
+client.global.set("projectId", response.body.projectId);
+client.log("projectId: " + client.global.get("projectId"));
+client.global.set("statusInProgress", "IN_PROGRESS");
+client.global.set("firstColor", "#AA0011");
+client.global.set("secondColor", "#1100AA");
+%}
+
+### Get the Project aggregate
+
+GET http://localhost:8080/projects/{{projectId}}
+
+
+
+### Add Member to the project
+
+POST http://localhost:8080/projects/{{projectId}}/members?initiatorUserId={{userAndreiId}}&addUserId={{userSergeiId}}
+
+
+
+### Create first Status
+
+POST http://localhost:8080/projects/{{projectId}}/status?statusName={{statusInProgress}}&statusColor={{firstColor}}
+
+### Create secont Status
+
+POST http://localhost:8080/projects/{{projectId}}/status?statusName={{statusInProgress}}&statusColor={{secondColor}}
+
+### a bad request trying create the same first Status
+
+POST http://localhost:8080/projects/{{projectId}}/status?statusName={{statusInProgress}}&statusColor={{firstColor}}
+
+### Delete first Status
+
+DELETE http://localhost:8080/projects/{{projectId}}/status?statusName={{statusInProgress}}&statusColor={{firstColor}}
+
+###
