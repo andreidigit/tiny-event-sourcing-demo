@@ -9,5 +9,25 @@ services:
       - 27017:27017
     volumes:
       - mongo_data:/data/db
+
+### Postgres DB
+  postgres:
+    image: postgres:13.6-alpine3.15
+    container_name: postgres-db
+#    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=tm
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    expose:
+      - "5431"
+    ports:
+      - "5431:5431"
+    command: -p 5431
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
 volumes:
   mongo_data: { }
+  postgres_data: { }

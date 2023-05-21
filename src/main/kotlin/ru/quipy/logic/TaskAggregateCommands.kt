@@ -19,6 +19,7 @@ fun TaskAggregateState.create(id: UUID, taskName: String, projectId: UUID): Task
 
 fun TaskAggregateState.updateName(taskNewName: String, userId: UUID): TaskNameUpdatedEvent {
     return TaskNameUpdatedEvent(
+        taskId = this.getId(),
         taskNewName = taskNewName,
         userId = userId
     )
@@ -26,6 +27,7 @@ fun TaskAggregateState.updateName(taskNewName: String, userId: UUID): TaskNameUp
 
 fun TaskAggregateState.addExecutor(addUserId: UUID, initiatorUserId: UUID): TaskExecutorAddedEvent {
     return TaskExecutorAddedEvent(
+        taskId = this.getId(),
         addUserId = addUserId,
         initiatorUserId = initiatorUserId
     )
@@ -33,6 +35,7 @@ fun TaskAggregateState.addExecutor(addUserId: UUID, initiatorUserId: UUID): Task
 
 fun TaskAggregateState.setStatus(status: Status, userId: UUID): TaskStatusChangedEvent{
     return TaskStatusChangedEvent(
+        taskId = this.getId(),
         status = status,
         userId = userId
     )

@@ -20,13 +20,10 @@ PUT http://localhost:8080/tasks/ChangedTaskName?taskId={{taskId}}&userId={{userA
 
 ### Change the Task Status with a wrong color
 
-POST http://localhost:8080/tasks/{{taskId}}/status?statusName={{statusInProgress}}&statusColor={{firstColor}}&userId={{userAndreiId}}
+PUT http://localhost:8080/tasks/{{taskId}}/status?statusName={{statusInProgress}}&statusColor={{firstColor}}&userId={{userAndreiId}}
 
 ### Change the Task Status with correct Status values
 
-POST http://localhost:8080/tasks/{{taskId}}/status?statusName={{statusInProgress}}&statusColor={{secondColor}}&userId={{userAndreiId}}
+PUT http://localhost:8080/tasks/{{taskId}}/status?statusName={{statusInProgress}}&statusColor={{secondColor}}&userId={{userAndreiId}}
 
-
-### Get the Task aggregate
-
-GET http://localhost:8080/tasks/{{taskId}}
+###

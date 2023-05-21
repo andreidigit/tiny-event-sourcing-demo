@@ -20,7 +20,7 @@ class TaskAggregateState : AggregateState<UUID, TaskAggregate> {
 
     // State transition functions which is represented by the class member function
     @StateTransitionFunc
-    fun userCreatedApply(event: TaskCreatedEvent) {
+    fun taskCreatedApply(event: TaskCreatedEvent) {
         taskId = event.taskId
         taskName = event.taskName
         status = event.status
@@ -29,19 +29,19 @@ class TaskAggregateState : AggregateState<UUID, TaskAggregate> {
     }
 
     @StateTransitionFunc
-    fun userNameUpdatedApply(event: TaskNameUpdatedEvent) {
+    fun taskNameUpdatedApply(event: TaskNameUpdatedEvent) {
         taskName = event.taskNewName
         updatedAt = createdAt
     }
 
     @StateTransitionFunc
-    fun userExecutorAddedApply(event: TaskExecutorAddedEvent) {
+    fun taskExecutorAddedApply(event: TaskExecutorAddedEvent) {
         taskExecutors.add(event.addUserId)
         updatedAt = createdAt
     }
 
     @StateTransitionFunc
-    fun userStatusChangedApply(event: TaskStatusChangedEvent) {
+    fun taskStatusChangedApply(event: TaskStatusChangedEvent) {
         status = event.status
         updatedAt = createdAt
     }

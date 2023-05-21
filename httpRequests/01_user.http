@@ -18,9 +18,5 @@ client.global.set("userSergeiId", response.body.userId);
 client.log("userSergeiId: " + client.global.get("userSergeiId"));
 %}
 
-
-
-### Get user Andrei aggregate
-
-GET http://localhost:8080/users/{{userAndreiId}}
+###
 
