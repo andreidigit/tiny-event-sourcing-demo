@@ -1,16 +1,13 @@
 package ru.quipy.logic
 
-import ru.quipy.api.ProjectCreatedEvent
-import ru.quipy.api.TagAssignedToTaskEvent
-import ru.quipy.api.TagCreatedEvent
-import ru.quipy.api.TaskCreatedEvent
+import ru.quipy.api.*
 import java.util.*
 
 
 // Commands : takes something -> returns event
 // Here the commands are represented by extension functions, but also can be the class member functions
 
-fun ProjectAggregateState.create(id: UUID, title: String, creatorId: String): ProjectCreatedEvent {
+fun ProjectAggregateState.create(id: UUID, title: String, creatorId: UUID): ProjectCreatedEvent {
     return ProjectCreatedEvent(
         projectId = id,
         title = title,
@@ -18,6 +15,7 @@ fun ProjectAggregateState.create(id: UUID, title: String, creatorId: String): Pr
     )
 }
 
+/*
 fun ProjectAggregateState.addTask(name: String): TaskCreatedEvent {
     return TaskCreatedEvent(projectId = this.getId(), taskId = UUID.randomUUID(), taskName = name)
 }
@@ -39,4 +37,39 @@ fun ProjectAggregateState.assignTagToTask(tagId: UUID, taskId: UUID): TagAssigne
     }
 
     return TagAssignedToTaskEvent(projectId = this.getId(), tagId = tagId, taskId = taskId)
+}
+*/
+
+fun ProjectAggregateState.addStatus(statusName: String, statusColor: String): StatusCreatedEvent {
+    for (status in this.statuses) {
+        if (status.statusName == statusName && status.statusColor == statusColor) {
+            throw IllegalArgumentException("There is the same Status in the project: $statusName:$statusColor")
+        }
+    }
+    return StatusCreatedEvent(projectId = this.getId(), statusName = statusName, statusColor = statusColor)
+}
+
+fun ProjectAggregateState.deleteStatus(statusName: String, statusColor: String): StatusDeletedEvent {
+    for (status in this.statuses) {
+        if (statusName == STATUS_DEFAULT_NAME && statusColor == STATUS_DEFAULT_COLOR){
+            throw IllegalArgumentException("Default Status can not be deleted: $statusName:$statusColor")
+        }
+        if (status.statusName == statusName && status.statusColor == statusColor) {
+            return StatusDeletedEvent(projectId = this.getId(), statusName = statusName, statusColor = statusColor)
+        }
+    }
+    throw IllegalArgumentException("There is no Status to delete: $statusName:$statusColor")
+}
+
+fun ProjectAggregateState.addMember(initiatorUserId: UUID, addUserId: UUID): MemberAddedEvent {
+    for (member in this.projectMembers) {
+        if (member == initiatorUserId) {
+            return MemberAddedEvent(
+                projectId = this.getId(),
+                initiatorUserId = initiatorUserId,
+                addUserId = addUserId
+            )
+        }
+    }
+    throw IllegalArgumentException("Initiator User with id=$initiatorUserId is not belong to the project")
 }

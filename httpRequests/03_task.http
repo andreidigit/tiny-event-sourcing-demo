@@ -1,0 +1,32 @@
+
+### Create a Task by User Sergei
+
+POST http://localhost:8080/tasks/NewTaskName?creatorId={{userSergeiId}}&projectId={{projectId}}
+
+> {%
+client.global.set("taskId", response.body.taskId);
+client.log("taskId: " + client.global.get("taskId"));
+%}
+
+### Add Sergei as an executor to the task
+
+POST http://localhost:8080/tasks/{{taskId}}/executor?initiatorUserId={{userAndreiId}}&addUserId={{userSergeiId}}
+
+
+### Change the Task Name
+
+PUT http://localhost:8080/tasks/ChangedTaskName?taskId={{taskId}}&userId={{userAndreiId}}
+
+
+### Change the Task Status with a wrong color
+
+POST http://localhost:8080/tasks/{{taskId}}/status?statusName={{statusInProgress}}&statusColor={{firstColor}}&userId={{userAndreiId}}
+
+### Change the Task Status with correct Status values
+
+POST http://localhost:8080/tasks/{{taskId}}/status?statusName={{statusInProgress}}&statusColor={{secondColor}}&userId={{userAndreiId}}
+
+
+### Get the Task aggregate
+
+GET http://localhost:8080/tasks/{{taskId}}
