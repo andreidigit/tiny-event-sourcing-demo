@@ -24,6 +24,7 @@ class TaskCreatedEvent(
 
 @DomainEvent(name = TASK_NAME_CHANGED_EVENT)
 class TaskNameUpdatedEvent(
+    val taskId: UUID,
     val taskNewName: String,
     val userId: UUID,
     createdAt: Long = System.currentTimeMillis(),
@@ -34,6 +35,7 @@ class TaskNameUpdatedEvent(
 
 @DomainEvent(name = TASK_EXECUTOR_ADDED_EVENT)
 class TaskExecutorAddedEvent(
+    val taskId: UUID,
     val addUserId: UUID,
     val initiatorUserId: UUID,
     createdAt: Long = System.currentTimeMillis(),
@@ -44,6 +46,7 @@ class TaskExecutorAddedEvent(
 
 @DomainEvent(name = TASK_STATUSES_CHANGED_EVENT)
 class TaskStatusChangedEvent(
+    val taskId: UUID,
     val status: Status,
     val userId: UUID,
     createdAt: Long = System.currentTimeMillis(),

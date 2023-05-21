@@ -27,7 +27,7 @@ class ProjectAggregateState : AggregateState<UUID, ProjectAggregate> {
         projectTitle = event.title
         creatorId = event.creatorId
         projectMembers.add(event.creatorId)
-        statuses.add(Status("CREATED", "#000000"))
+        statuses.add(Status(event.statusName, event.statusColor))
         updatedAt = createdAt
     }
 

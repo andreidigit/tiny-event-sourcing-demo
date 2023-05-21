@@ -1,6 +1,5 @@
 package ru.quipy.controller
 
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import ru.quipy.api.*
-import ru.quipy.core.EventSourcingService
 import ru.quipy.logic.*
 import ru.quipy.service.TaskService
 import java.util.*
@@ -26,11 +24,6 @@ class TaskController(
         @RequestParam creatorId: UUID
     ): TaskCreatedEvent {
         return taskService.createTask(taskName, projectId, creatorId)
-    }
-
-    @GetMapping("/{taskId}")
-    fun getTask (@PathVariable taskId: UUID): TaskAggregateState? {
-        return taskService.getTask(taskId)
     }
 
     @PostMapping("/{taskId}/executor")
@@ -51,7 +44,7 @@ class TaskController(
         return taskService.changeTaskName(newTaskName, userId, taskId)
     }
 
-    @PostMapping("/{taskId}/status")
+    @PutMapping("/{taskId}/status")
     fun changeStatus(
         @PathVariable taskId: UUID,
         @RequestParam statusName: String,
